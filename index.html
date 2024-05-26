@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFOStandard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+         header {
+        background-color: #ffffff;
+        color: #fff;
+        padding: 5px 0;
+        text-align: left;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 5px;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+        main {
+            padding: 40px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        section {
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+		.welcome-section {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    .section-header {
+        display: flex;
+        width: 100%;
+    }
+     .logo-container {
+        flex-shrink: 0;
+        margin-right: 20px; /* Adjust as needed */
+        display: flex;
+        align-items: center;
+    }
+    .logo-container img {
+        width: 150px; /* Adjust the size as needed */
+        height: auto;
+    }
+        section h2 {
+            color: #343a40;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+        pre {
+            text-align: left;
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 20px 0;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        a.button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+        }
+.support-list {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+    }
+    .support-list li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .chip {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 0.9em;
+        color: white;
+        border-radius: 16px;
+        margin-left: 10px;
+        flex-shrink: 0;
+    }
+    .supported {
+        background-color: #28a745; /* Green for supported */
+    }
+    .not-supported {
+        background-color: #fd7e14; /* Orange for not supported */
+    }
+.roadmap {
+        text-align: left;
+        padding-left: 0;
+        margin: 0 auto;
+        max-width: 800px;
+    }
+    .milestone {
+        margin-bottom: 20px;
+    }
+    .milestone-title {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    .progress {
+        background-color: #e9ecef;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 5px;
+    }
+    .progress-bar {
+        background-color: #007bff;
+        height: 24px;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        transition: width 0.6s ease;
+    }
+    .milestone-description {
+        margin: 0;
+    }
+    </style>
+</head>
+<body>
+   <header>
+    <div class="header-content">
+        <img src="nfoStandard-Logo.png"></img>
+        <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
+    </div>
+</header>
+
+    <main>
+        <section class="welcome-section">
+        <div class="section-header">
+            <div class="logo-container">
+                <img src="nfoLogo-Only.png" alt="NFOStandard Logo">
+            </div>
+            <div class="section-content">
+                <h2>Welcome to NFOStandard</h2>
+                <p>NFOStandard aims to standardize the NFO File Format for media. By doing so, we make it easier to transfer metadata and statistics between media servers like Plex and Jellyfin.</p>
+                <p>With our standard, you can store all media-related data in an NFO file, either inside the video file or next to it. Any new library systems that support our format can seamlessly bring over all important data.</p>
+            </div>
+        </div>
+    </section>
+
+        <section>
+            <h2>Supported Media Types</h2>
+            <p>The Open NFO File Standard initially supports the following types of media:</p>
+            <ul>
+                <li><strong>Movies:</strong> Comprehensive metadata for films.</li>
+                <li><strong>TV Shows:</strong> Detailed information for television series.</li>
+                <li><strong>Adult Videos:</strong> Specific schema definitions for adult content.</li>
+                <li><strong>Anime:</strong> Metadata tailored for anime series and movies.</li>
+                <li><strong>Music:</strong> Information for music tracks and albums.</li>
+                <li><strong>Audiobooks:</strong> Metadata for audiobooks.</li>
+                <li><strong>Podcasts:</strong> Details for podcast episodes and series.</li>
+                <li><strong>Music Videos:</strong> Information for music video content.</li>
+            </ul>
+        </section>
+
+     <section>
+    <h2>Plugins and Support Libraries</h2>
+    <p>To facilitate the adoption of the NFOStandard, we provide various plugins and support libraries for different media server platforms:</p>
+    <ul class="support-list">
+        <li><strong>Plex:</strong> <span class="chip not-supported">Supported</span></li>
+        <li><strong>Jellyfin:</strong> <span class="chip not-supported">Supported</span></li>
+        <li><strong>Emby:</strong> <span class="chip not-supported">Supported</span></li>
+        <li><strong>Kodi:</strong> <span class="chip not-supported">Supported</span></li>
+        <li><strong>Sonarr:</strong> <span class="chip not-supported">Not Supported</span></li>
+        <li><strong>Radarr:</strong> <span class="chip not-supported">Not Supported</span></li>
+        <li><strong>Whisparr:</strong> <span class="chip not-supported">Not Supported</span></li>
+        <li><strong>Tautulli:</strong> <span class="chip not-supported">Not Supported</span></li>
+    </ul>
+    <p>If you are a developer, we welcome contributions to expand our support for other platforms.</p>
+</section>
+
+
+<section>
+    <h2>Roadmap</h2>
+    <p>Our roadmap outlines the key milestones for building and improving the NFOStandard project:</p>
+    <div class="roadmap">
+        <div class="milestone">
+            <span class="milestone-title">Initial Data Structures</span>
+            <div class="progress">
+                <div class="progress-bar" style="width: 70%;">70%</div>
+            </div>
+            <p class="milestone-description">We are currently working on the first pass of data structures to ensure they work correctly.</p>
+        </div>
+        <div class="milestone">
+            <span class="milestone-title">Feedback Phase</span>
+            <div class="progress">
+                <div class="progress-bar" style="width: 10%;">10%</div>
+            </div>
+            <p class="milestone-description">After the initial data structures are in place, we will gather feedback to make improvements.</p>
+        </div>
+        <div class="milestone">
+            <span class="milestone-title">Plex Library Scanner</span>
+            <div class="progress">
+                <div class="progress-bar" style="width: 0%;">0%</div>
+            </div>
+            <p class="milestone-description">The next major task is to build a Plex library scanner, which we expect to take 3-6 months.</p>
+        </div>
+        <div class="milestone">
+            <span class="milestone-title">Future Development</span>
+            <div class="progress">
+                <div class="progress-bar" style="width: 0%;">0%</div>
+            </div>
+            <p class="milestone-description">We will continue to work on additional features and support for other platforms as we progress.</p>
+        </div>
+    </div>
+</section>
+        <section>
+            <h2>Example XML File</h2>
+            <p>Here's an example of an NFO file for a movie, demonstrating the use of our schema:</p>
+            <pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;media xmlns="TheMediaStandard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="TheMediaStandard https://raw.githubusercontent.com/Biztactix/Standard-MediaFormat/main/main.xsd"&gt;
+
+  &lt;movie&gt;
+    &lt;title&gt;Inception&lt;/title&gt;
+    &lt;originaltitle&gt;Inception&lt;/originaltitle&gt;
+    &lt;sorttitle&gt;Inception&lt;/sorttitle&gt;
+    &lt;alternatetitle&gt;Origem&lt;/alternatetitle&gt;
+    &lt;alternatetitle&gt;Début&lt;/alternatetitle&gt;
+    &lt;rating name="imdb" max="10" default="true" value="8.8" votes="200000"/&gt;
+    &lt;userrating&gt;9.0&lt;/userrating&gt;
+    &lt;outline&gt;A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.&lt;/outline&gt;
+    &lt;plot&gt;Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction: stealing valuable secrets from deep within the subconscious during the dream state when the mind is at its most vulnerable. Cobb's rare ability has made him a coveted player in this treacherous new world of corporate espionage, but it has also made him an international fugitive and cost him everything he has ever loved. Now Cobb is being offered a chance at redemption. One last job could give him his life back but only if he can accomplish the impossible, inception.&lt;/plot&gt;
+    &lt;tagline&gt;Your mind is the scene of the crime.&lt;/tagline&gt;
+    &lt;runtime&gt;148&lt;/runtime&gt;
+    &lt;banner type="poster" width="300" height="450" url="http://example.com/poster1.jpg"/&gt;
+    &lt;thumb type="thumbnail" width="150" height="150" url="http://example.com/thumb1.jpg"/&gt;
+    &lt;fanart type="thumbnail" width="150" height="150" url="http://example.com/fanart1.jpg"/&gt;
+    &lt;fanart type="thumbnail" width="150" height="150" url="http://example.com/fanart2.jpg"/&gt;    
+    &lt;contentrating country="USA" board="MPAA" rating="PG-13" image="mpaa_pg13.png"/&gt;
+    &lt;uniqueid type="imdb" default="true"&gt;tt1375666&lt;/uniqueid&gt;
+    &lt;uniqueid type="tmdb"&gt;12345&lt;/uniqueid&gt;
+    &lt;genre&gt;Action&lt;/genre&gt;
+    &lt;genre&gt;Sci-Fi&lt;/genre&gt;
+    &lt;tag&gt;Heist&lt;/tag&gt;
+    &lt;tag&gt;Dream&lt;/tag&gt;
+    &lt;setname&gt;Inception Series&lt;/setname&gt;
+    &lt;setoverview&gt;Movies about dream extraction.&lt;/setoverview&gt;
+    &lt;country&gt;USA&lt;/country&gt;
+    &lt;productioncompany&gt;Warner Bros.&lt;/productioncompany&gt;
+    &lt;keyword&gt;dream&lt;/keyword&gt;
+    &lt;keyword&gt;heist&lt;/keyword&gt;
+    &lt;releasedate&gt;2010-07-16&lt;/releasedate&gt;
+    &lt;award&gt;Academy Award for Best Cinematography&lt;/award&gt;
+    &lt;subtitlelanguage&gt;English&lt;/subtitlelanguage&gt;
+    &lt;soundtrack&gt;Inception OST&lt;/soundtrack&gt;
+    &lt;parentalguide&gt;Some material may be inappropriate for children under 13.&lt;/parentalguide&gt;
+    &lt;actor&gt;
+      &lt;name&gt;Leonardo DiCaprio&lt;/name&gt;
+      &lt;role&gt;Dom Cobb&lt;/role&gt;
+      &lt;order&gt;1&lt;/order&gt;
+      &lt;thumb&gt;leo.jpg&lt;/thumb&gt;
+      &lt;bio&gt;Leonardo Wilhelm DiCaprio is an American actor and film producer.&lt;/bio&gt;
+      &lt;url&gt;https://www.imdb.com/name/nm0000138/&lt;/url&gt;
+    &lt;/actor&gt;
+    &lt;actor&gt;
+      &lt;name&gt;Joseph Gordon-Levitt&lt;/name&gt;
+      &lt;role&gt;Arthur&lt;/role&gt;
+      &lt;order&gt;2&lt;/order&gt;
+      &lt;thumb&gt;joseph.jpg&lt;/thumb&gt;
+      &lt;bio&gt;Joseph Leonard Gordon-Levitt is an American actor and filmmaker.&lt;/bio&gt;
+      &lt;url&gt;https://www.imdb.com/name/nm0330687/&lt;/url&gt;
+    &lt;/actor&gt;
+    &lt;director&gt;
+      &lt;name&gt;Christopher Nolan&lt;/name&gt;
+      &lt;thumb&gt;nolan.jpg&lt;/thumb&gt;
+      &lt;bio&gt;Christopher Edward Nolan is a British-American film director, screenwriter, and producer.&lt;/bio&gt;
+      &lt;url&gt;https://www.imdb.com/name/nm0634240/&lt;/url&gt;
+    &lt;/director&gt;
+    &lt;writer&gt;
+      &lt;name&gt;Christopher Nolan&lt;/name&gt;
+      &lt;thumb&gt;nolan.jpg&lt;/thumb&gt;
+      &lt;bio&gt;Christopher Edward Nolan is a British-American film director, screenwriter, and producer.&lt;/bio&gt;
+      &lt;url&gt;https://www.imdb.com/name/nm0634240/&lt;/url&gt;
+    &lt;/writer&gt;
+  &lt;/movie&gt;
+&lt;/media&gt;
+            </pre>
+        </section>
+		<section>
+ <div class="header-content">
+        <h1>NFOStandard</h1>
+        <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
+    </div>		
+	</section>
+    </main>
+    <footer>
+        <p>&copy; 2024 NFOStandard. All rights reserved.</p>
+    </footer>
+</body>
+</html>
