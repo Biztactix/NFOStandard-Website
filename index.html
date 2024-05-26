@@ -4,38 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NFOStandard</title>
-	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-    <style>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             background-color: #f4f4f4;
         }
-         header {
-        background-color: #ffffff;
-        color: #fff;
-        padding: 5px 0;
-        text-align: left;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
-    .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 5px;
-    }
-    header h1 {
-        margin: 0;
-        font-size: 2em;
-    }
+        header {
+            background-color: #ffffff;
+            color: #fff;
+            padding: 5px 0;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 5px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
         main {
             padding: 40px 20px;
             max-width: 800px;
@@ -48,25 +48,28 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-		.welcome-section {
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-    .section-header {
-        display: flex;
-        width: 100%;
-    }
-     .logo-container {
-        flex-shrink: 0;
-        margin-right: 20px; /* Adjust as needed */
-        display: flex;
-        align-items: center;
-    }
-    .logo-container img {
-        width: 150px; /* Adjust the size as needed */
-        height: auto;
-    }
+        .welcome-section {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .section-header {
+            display: flex;
+            width: 100%;
+        }
+        .logo-container {
+            flex-shrink: 0;
+            margin-right: 20px; /* Adjust as needed */
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img {
+            width: 150px; /* Adjust the size as needed */
+            height: auto;
+        }
+        .section-content {
+            width: 100%;
+        }
         section h2 {
             color: #343a40;
             border-bottom: 2px solid #007bff;
@@ -108,88 +111,111 @@
             bottom: 0;
             box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
         }
-.support-list {
-        list-style: none;
-        padding: 0;
-        text-align: left;
-    }
-    .support-list li {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-    }
-    .chip {
-        display: inline-block;
-        padding: 5px 10px;
-        font-size: 0.9em;
-        color: white;
-        border-radius: 16px;
-        margin-left: 10px;
-        flex-shrink: 0;
-    }
-    .supported {
-        background-color: #28a745; /* Green for supported */
-    }
-    .not-supported {
-        background-color: #fd7e14; /* Orange for not supported */
-    }
-.roadmap {
-        text-align: left;
-        padding-left: 0;
-        margin: 0 auto;
-        max-width: 800px;
-    }
-    .milestone {
-        margin-bottom: 20px;
-    }
-    .milestone-title {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-    }
-    .progress {
-        background-color: #e9ecef;
-        border-radius: 5px;
-        overflow: hidden;
-        position: relative;
-        margin-bottom: 5px;
-    }
-    .progress-bar {
-        background-color: #007bff;
-        height: 24px;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        white-space: nowrap;
-        transition: width 0.6s ease;
-    }
-    .milestone-description {
-        margin: 0;
-    }
+        .support-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+        .support-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .chip {
+            display: inline-block;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            color: white;
+            border-radius: 16px;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+        .supported {
+            background-color: #28a745; /* Green for supported */
+        }
+        .not-supported {
+            background-color: #fd7e14; /* Orange for not supported */
+        }
+        .roadmap {
+            text-align: left;
+            padding-left: 0;
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        .milestone {
+            margin-bottom: 20px;
+        }
+        .milestone-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .progress {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 5px;
+        }
+        .progress-bar {
+            background-color: #007bff;
+            height: 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            transition: width 0.6s ease;
+        }
+        .milestone-description {
+            margin: 0;
+        }
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: center;
+            }
+            .header-content img {
+                width: 80%; /* Adjust for mobile */
+                margin-bottom: 10px;
+            }
+            .welcome-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .logo-container {
+                display: none; /* Hide the logo on smaller screens */
+            }
+            .section-content {
+                width: 100%;
+            }
+            .progress-bar {
+                height: 20px; /* Adjust for mobile */
+            }
+        }
     </style>
 </head>
 <body>
-   <header>
-    <div class="header-content">
-        <img src="nfoStandard-Logo.png"></img>
-        <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
-    </div>
-</header>
+    <header>
+        <div class="header-content">
+            <img src="nfoStandard-Logo.png" alt="NFOStandard Logo">
+            <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
+        </div>
+    </header>
 
     <main>
         <section class="welcome-section">
-        <div class="section-header">
-            <div class="logo-container">
-                <img src="nfoLogo-Only.png" alt="NFOStandard Logo">
+            <div class="section-header">
+                <div class="logo-container">
+                    <img src="nfoLogo-Only.png" alt="NFOStandard Logo">
+                </div>
+                <div class="section-content">
+                    <h2>Welcome to NFOStandard</h2>
+                    <p>NFOStandard aims to standardize the NFO File Format for media. By doing so, we make it easier to transfer metadata and statistics between media servers like Plex and Jellyfin.</p>
+                    <p>With our standard, you can store all media-related data in an NFO file, either inside the video file or next to it. Any new library systems that support our format can seamlessly bring over all important data.</p>
+                </div>
             </div>
-            <div class="section-content">
-                <h2>Welcome to NFOStandard</h2>
-                <p>NFOStandard aims to standardize the NFO File Format for media. By doing so, we make it easier to transfer metadata and statistics between media servers like Plex and Jellyfin.</p>
-                <p>With our standard, you can store all media-related data in an NFO file, either inside the video file or next to it. Any new library systems that support our format can seamlessly bring over all important data.</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
         <section>
             <h2>Supported Media Types</h2>
@@ -206,57 +232,57 @@
             </ul>
         </section>
 
-     <section>
-    <h2>Plugins and Support Libraries</h2>
-    <p>To facilitate the adoption of the NFOStandard, we provide various plugins and support libraries for different media server platforms:</p>
-    <ul class="support-list">
-        <li><strong>Plex:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Jellyfin:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Emby:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Kodi:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Sonarr:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Radarr:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Whisparr:</strong> <span class="chip not-supported">Not Supported</span></li>
-        <li><strong>Tautulli:</strong> <span class="chip not-supported">Not Supported</span></li>
-    </ul>
-    <p>If you are a developer, we welcome contributions to expand our support for other platforms.</p>
-</section>
+        <section>
+            <h2>Plugins and Support Libraries</h2>
+            <p>To facilitate the adoption of the NFOStandard, we provide various plugins and support libraries for different media server platforms:</p>
+            <ul class="support-list">
+                <li><strong>Plex:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Jellyfin:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Emby:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Kodi:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Sonarr:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Radarr:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Whisparr:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Tautulli:</strong> <span class="chip not-supported">Not Supported</span></li>
+            </ul>
+            <p>If you are a developer, we welcome contributions to expand our support for other platforms.</p>
+        </section>
 
+        <section>
+            <h2>Roadmap</h2>
+            <p>Our roadmap outlines the key milestones for building and improving the NFOStandard project:</p>
+            <div class="roadmap">
+                <div class="milestone">
+                    <span class="milestone-title">Initial Data Structures</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 30%;">30%</div>
+                    </div>
+                    <p class="milestone-description">We are currently working on the first pass of data structures to ensure they work correctly.</p>
+                </div>
+                <div class="milestone">
+                    <span class="milestone-title">Feedback Phase</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 10%;">10%</div>
+                    </div>
+                    <p class="milestone-description">After the initial data structures are in place, we will gather feedback to make improvements.</p>
+                </div>
+                <div class="milestone">
+                    <span class="milestone-title">Plex Library Scanner</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 5%;">5%</div>
+                    </div>
+                    <p class="milestone-description">The next major task is to build a Plex library scanner, which we expect to take 3-6 months.</p>
+                </div>
+                <div class="milestone">
+                    <span class="milestone-title">Future Development</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 0%;">0%</div>
+                    </div>
+                    <p class="milestone-description">We will continue to work on additional features and support for other platforms as we progress.</p>
+                </div>
+            </div>
+        </section>
 
-<section>
-    <h2>Roadmap</h2>
-    <p>Our roadmap outlines the key milestones for building and improving the NFOStandard project:</p>
-    <div class="roadmap">
-        <div class="milestone">
-            <span class="milestone-title">Initial Data Structures</span>
-            <div class="progress">
-                <div class="progress-bar" style="width: 30%;">30%</div>
-            </div>
-            <p class="milestone-description">We are currently working on the first pass of data structures to ensure they work correctly.</p>
-        </div>
-        <div class="milestone">
-            <span class="milestone-title">Feedback Phase</span>
-            <div class="progress">
-                <div class="progress-bar" style="width: 10%;">10%</div>
-            </div>
-            <p class="milestone-description">After the initial data structures are in place, we will gather feedback to make improvements.</p>
-        </div>
-        <div class="milestone">
-            <span class="milestone-title">Plex Library Scanner</span>
-            <div class="progress">
-                <div class="progress-bar" style="width: 5%;">5%</div>
-            </div>
-            <p class="milestone-description">The next major task is to build a Plex library scanner, which we expect to take 3-6 months.</p>
-        </div>
-        <div class="milestone">
-            <span class="milestone-title">Future Development</span>
-            <div class="progress">
-                <div class="progress-bar" style="width: 0%;">0%</div>
-            </div>
-            <p class="milestone-description">We will continue to work on additional features and support for other platforms as we progress.</p>
-        </div>
-    </div>
-</section>
         <section>
             <h2>Example XML File</h2>
             <p>Here's an example of an NFO file for a movie, demonstrating the use of our schema:</p>
@@ -330,13 +356,15 @@
 &lt;/media&gt;
             </pre>
         </section>
-		<section>
- <div class="header-content">
-        <h1>NFOStandard</h1>
-        <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
-    </div>		
-	</section>
+
+        <section>
+            <div class="header-content">
+                <h1>NFOStandard</h1>
+                <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
+            </div>        
+        </section>
     </main>
+
     <footer>
         <p>&copy; 2024 NFOStandard. All rights reserved.</p>
     </footer>
