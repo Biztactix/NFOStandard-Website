@@ -217,7 +217,7 @@
                     <img src="nfoLogo-Only.png" alt="NFOStandard Logo">
                 </div>
                 <div class="section-content">
-                    <h2>Welcome to NFOStandard v1.0.0</h2>
+                    <h2>Welcome to NFOStandard v2.0.0</h2>
                     <p>The NFO Standard is an open, unified metadata format for media files. By creating a consistent standard for .nfo files across various media applications, we eliminate the need for each application to create its own format, saving developers countless hours and ensuring compatibility across different platforms.</p>
                     <p>Built to cover 95% of use cases while maintaining extensibility for edge cases, the NFO Standard allows you to store all media-related data in an NFO file next to your media. Any new library systems that support our format can seamlessly bring over all important metadata, watched status, and other crucial information.</p>
                 </div>
@@ -239,7 +239,7 @@
 
         <section>
             <h2>Supported Media Types</h2>
-            <p>The NFO Standard v1.0.0 supports comprehensive metadata for the following media types:</p>
+            <p>The NFO Standard v2.0.0 supports comprehensive metadata for the following media types:</p>
             <ul>
                 <li><strong>Movies:</strong> Comprehensive metadata for films (movie.xsd)</li>
                 <li><strong>TV Shows:</strong> Detailed information for television series (tvshow.xsd)</li>
@@ -255,12 +255,34 @@
         </section>
 
         <section>
+            <h2>What's New in Version 2.0.0</h2>
+            <p>Version 2.0.0 brings significant improvements and enhanced standards compliance:</p>
+            <ul>
+                <li><strong>Enhanced Validation:</strong> All type names now use UpperCamelCase convention (e.g., <code>RatingType</code> instead of <code>ratingType</code>)</li>
+                <li><strong>ISO Standards Compliance:</strong> Country codes now use ISO 3166-1 alpha-2 format (e.g., "US" instead of "USA")</li>
+                <li><strong>Improved Content Rating Structure:</strong> Content ratings now use child elements for better extensibility</li>
+                <li><strong>Better Type Constraints:</strong> Rating values limited to 1 decimal place, improved validation patterns</li>
+                <li><strong>Testing Infrastructure:</strong> Comprehensive automated testing for all schemas and examples</li>
+                <li><strong>Developer Tools:</strong> Protocol Buffer support, migration scripts, and enhanced validation tools</li>
+            </ul>
+            <h3>Migration from v1 to v2</h3>
+            <p>If you're upgrading from v1, key changes include:</p>
+            <ul>
+                <li>Update your schema location to <code>https://xsd.nfostandard.com/v2/main.xsd</code></li>
+                <li>Convert ContentRating elements to the new child element structure</li>
+                <li>Update country codes to ISO 3166-1 alpha-2 format</li>
+                <li>Update type references to use UpperCamelCase naming</li>
+            </ul>
+            <p>Version 1 schemas remain available at their original URLs for backward compatibility during migration.</p>
+        </section>
+
+        <section>
             <h2>Validation Tools and Libraries</h2>
             <p>To ensure your NFO files conform to the standard, we provide multiple validation tools:</p>
             <ul>
                 <li><strong>Python Validator:</strong> Install with <code>pip install nfo-validate</code></li>
                 <li><strong>JavaScript/Node.js Validator:</strong> Install with <code>npm install @nfostandard/validator</code></li>
-                <li><strong>Direct XSD Validation:</strong> Use any XML validator with our schemas at <code>https://xsd.nfostandard.com/v1/</code></li>
+                <li><strong>Direct XSD Validation:</strong> Use any XML validator with our schemas at <code>https://xsd.nfostandard.com/v2/</code></li>
             </ul>
             <h3>Coming Soon - Platform Support</h3>
             <p>We are actively developing plugins for major media platforms:</p>
@@ -277,14 +299,14 @@
 
         <section>
             <h2>Project Status</h2>
-            <p><strong>🎉 Version 1.0.0 Released!</strong> - The NFO Standard has reached its first stable release as of January 15, 2024.</p>
+            <p><strong>🎉 Version 2.0.0 Released!</strong> - The NFO Standard has released version 2.0.0 as of December 9, 2024, with major improvements and enhanced validation.</p>
             <div class="roadmap">
                 <div class="milestone">
-                    <span class="milestone-title">✅ Version 1.0.0 - Complete!</span>
+                    <span class="milestone-title">✅ Version 2.0.0 - Complete!</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 100%; background-color: #28a745;">100%</div>
                     </div>
-                    <p class="milestone-description">Initial stable release with comprehensive schema definitions for all media types, validation tools, and full documentation.</p>
+                    <p class="milestone-description">Major release with enhanced validation, ISO standards compliance, improved content rating structure, and comprehensive testing infrastructure.</p>
                 </div>
                 <div class="milestone">
                     <span class="milestone-title">Platform Plugins</span>
@@ -308,7 +330,7 @@
                     <p class="milestone-description">Growing ecosystem support through community contributions and third-party tool integration.</p>
                 </div>
             </div>
-            <p><strong>Long-Term Support:</strong> Version 1.0.0 is an LTS release with support guaranteed until January 2027.</p>
+            <p><strong>Long-Term Support:</strong> Version 2.0.0 includes backward compatibility with v1 schemas still available for migration purposes.</p>
         </section>
 
         <section>
@@ -316,7 +338,7 @@
             <p>Here's an example of an NFO file for a movie, demonstrating the use of our schema:</p>
             <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;root xmlns="NFOStandard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="NFOStandard https://xsd.nfostandard.com/v1/main.xsd"&gt;
+&lt;root xmlns="NFOStandard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="NFOStandard https://xsd.nfostandard.com/v2/main.xsd"&gt;
   &lt;media&gt;
 
   &lt;movie&gt;
@@ -335,7 +357,10 @@
     &lt;thumb type="thumbnail" width="150" height="150" url="http://example.com/thumb1.jpg"/&gt;
     &lt;fanart type="thumbnail" width="150" height="150" url="http://example.com/fanart1.jpg"/&gt;
     &lt;fanart type="thumbnail" width="150" height="150" url="http://example.com/fanart2.jpg"/&gt;    
-    &lt;contentrating country="USA" board="MPAA" rating="PG-13" image="mpaa_pg13.png"/&gt;
+    &lt;contentrating country="US" board="MPAA"&gt;
+      &lt;rating&gt;PG-13&lt;/rating&gt;
+      &lt;image&gt;mpaa_pg13.png&lt;/image&gt;
+    &lt;/contentrating&gt;
     &lt;uniqueid type="imdb" default="true"&gt;tt1375666&lt;/uniqueid&gt;
     &lt;uniqueid type="tmdb"&gt;12345&lt;/uniqueid&gt;
     &lt;genre&gt;Action&lt;/genre&gt;
@@ -344,7 +369,7 @@
     &lt;tag&gt;Dream&lt;/tag&gt;
     &lt;setname&gt;Inception Series&lt;/setname&gt;
     &lt;setoverview&gt;Movies about dream extraction.&lt;/setoverview&gt;
-    &lt;country&gt;USA&lt;/country&gt;
+    &lt;country&gt;US&lt;/country&gt;
     &lt;productioncompany&gt;Warner Bros.&lt;/productioncompany&gt;
     &lt;keyword&gt;dream&lt;/keyword&gt;
     &lt;keyword&gt;heist&lt;/keyword&gt;
@@ -409,7 +434,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 NFOStandard v1.0.0 | Licensed under The Unlicense | <a href="https://github.com/Biztactix/NFOStandard" style="color: #fff;">GitHub</a></p>
+        <p>&copy; 2024 NFOStandard v2.0.0 | Licensed under The Unlicense | <a href="https://github.com/Biztactix/NFOStandard" style="color: #fff;">GitHub</a></p>
     </footer>
 </body>
 </html>
