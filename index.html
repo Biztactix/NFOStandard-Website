@@ -177,6 +177,106 @@
         .milestone-description {
             margin: 0;
         }
+        .validator-container {
+            margin-top: 20px;
+        }
+        .validator-input {
+            margin-bottom: 20px;
+        }
+        .validator-input label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #343a40;
+        }
+        .validator-input textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+        .validator-input textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        .validator-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .button.secondary {
+            background-color: #6c757d;
+        }
+        .button.secondary:hover {
+            background-color: #545b62;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-left: auto;
+        }
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+        .validation-results {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            min-height: 60px;
+            display: none;
+        }
+        .validation-results.show {
+            display: block;
+        }
+        .validation-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .validation-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .validation-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeaa7;
+        }
+        .error-list {
+            margin-top: 15px;
+        }
+        .error-item {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+            border-left: 4px solid #dc3545;
+        }
+        .error-item.warning {
+            border-left-color: #ffc107;
+        }
+        .error-location {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -198,6 +298,14 @@
             }
             .progress-bar {
                 height: 20px; /* Adjust for mobile */
+            }
+            .validator-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .checkbox-container {
+                margin-left: 0;
+                margin-top: 10px;
             }
         }
     </style>
@@ -295,6 +403,31 @@
                 <li><strong>Radarr:</strong> <span class="chip not-supported">Planned</span></li>
             </ul>
             <p>If you are a developer, we welcome contributions! Check our GitHub for plugin development guides and migration tools.</p>
+        </section>
+
+        <section>
+            <h2>Online NFO Validator</h2>
+            <p>Validate your NFO files directly in your browser using our online validator. Paste your XML content below to check if it conforms to the NFO Standard v2.0.0 schema:</p>
+            
+            <div class="validator-container">
+                <div class="validator-input">
+                    <label for="nfo-content">NFO XML Content:</label>
+                    <textarea id="nfo-content" placeholder="Paste your NFO XML content here..." rows="15"></textarea>
+                </div>
+                
+                <div class="validator-controls">
+                    <button id="validate-btn" class="button">Validate NFO</button>
+                    <button id="clear-btn" class="button secondary">Clear</button>
+                    <button id="load-example-btn" class="button secondary">Load Example</button>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="strict-mode">
+                        <span class="checkmark"></span>
+                        Strict mode (check recommended fields)
+                    </label>
+                </div>
+                
+                <div id="validation-results" class="validation-results"></div>
+            </div>
         </section>
 
         <section>
@@ -436,5 +569,432 @@
     <footer>
         <p>&copy; 2024 NFOStandard v2.0.0 | Licensed under The Unlicense | <a href="https://github.com/Biztactix/NFOStandard" style="color: #fff;">GitHub</a></p>
     </footer>
+
+    <script>
+        class NFOValidator {
+            constructor() {
+                this.schemaCache = new Map();
+                this.init();
+            }
+
+            init() {
+                const validateBtn = document.getElementById('validate-btn');
+                const clearBtn = document.getElementById('clear-btn');
+                const loadExampleBtn = document.getElementById('load-example-btn');
+                const nfoContent = document.getElementById('nfo-content');
+
+                validateBtn.addEventListener('click', () => this.validateNFO());
+                clearBtn.addEventListener('click', () => this.clearContent());
+                loadExampleBtn.addEventListener('click', () => this.loadExample());
+
+                // Auto-resize textarea
+                nfoContent.addEventListener('input', (e) => {
+                    this.autoResize(e.target);
+                });
+            }
+
+            autoResize(textarea) {
+                textarea.style.height = 'auto';
+                textarea.style.height = Math.max(300, textarea.scrollHeight) + 'px';
+            }
+
+            async validateNFO() {
+                const content = document.getElementById('nfo-content').value.trim();
+                const strictMode = document.getElementById('strict-mode').checked;
+                const resultsDiv = document.getElementById('validation-results');
+                const validateBtn = document.getElementById('validate-btn');
+
+                if (!content) {
+                    this.showResult('Please enter NFO XML content to validate.', 'warning');
+                    return;
+                }
+
+                validateBtn.textContent = 'Validating...';
+                validateBtn.classList.add('loading');
+
+                try {
+                    const result = await this.performValidation(content, strictMode);
+                    this.displayResults(result);
+                } catch (error) {
+                    this.showResult(`Validation failed: ${error.message}`, 'error');
+                } finally {
+                    validateBtn.textContent = 'Validate NFO';
+                    validateBtn.classList.remove('loading');
+                }
+            }
+
+            async performValidation(content, strictMode) {
+                // Parse XML content
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(content, 'application/xml');
+                
+                // Check for XML parsing errors
+                const parseError = doc.querySelector('parsererror');
+                if (parseError) {
+                    throw new Error(`XML parsing error: ${parseError.textContent}`);
+                }
+
+                const errors = [];
+                const warnings = [];
+
+                // Basic structure validation
+                this.validateBasicStructure(doc, errors);
+                
+                // Namespace validation
+                this.validateNamespace(doc, errors);
+                
+                // Schema location validation
+                this.validateSchemaLocation(doc, errors, warnings);
+                
+                // Content validation
+                this.validateContent(doc, errors, warnings, strictMode);
+
+                return {
+                    isValid: errors.length === 0,
+                    errors,
+                    warnings,
+                    strictMode
+                };
+            }
+
+            validateBasicStructure(doc, errors) {
+                const root = doc.documentElement;
+                
+                if (!root || root.tagName !== 'root') {
+                    errors.push({
+                        message: 'Root element must be <root>',
+                        location: 'Document root'
+                    });
+                    return;
+                }
+
+                const mediaElement = root.querySelector('media');
+                if (!mediaElement) {
+                    errors.push({
+                        message: 'Missing required <media> element',
+                        location: 'root'
+                    });
+                    return;
+                }
+
+                const mediaTypes = ['movie', 'tvshow', 'music', 'audiobook', 'podcast', 'anime', 'adult', 'musicvideo', 'video'];
+                const foundMediaTypes = mediaTypes.filter(type => mediaElement.querySelector(type));
+                
+                if (foundMediaTypes.length === 0) {
+                    errors.push({
+                        message: 'Media element must contain one of: ' + mediaTypes.join(', '),
+                        location: 'media'
+                    });
+                } else if (foundMediaTypes.length > 1) {
+                    errors.push({
+                        message: 'Media element must contain only one media type, found: ' + foundMediaTypes.join(', '),
+                        location: 'media'
+                    });
+                }
+
+                // Check for required title element
+                foundMediaTypes.forEach(type => {
+                    const mediaTypeElement = mediaElement.querySelector(type);
+                    const title = mediaTypeElement.querySelector('title');
+                    if (!title || !title.textContent.trim()) {
+                        errors.push({
+                            message: `Missing required <title> element in <${type}>`,
+                            location: type
+                        });
+                    }
+                });
+            }
+
+            validateNamespace(doc, errors) {
+                const root = doc.documentElement;
+                const namespace = root.getAttribute('xmlns');
+                
+                if (namespace !== 'NFOStandard') {
+                    errors.push({
+                        message: 'Root element must have xmlns="NFOStandard"',
+                        location: 'root xmlns attribute'
+                    });
+                }
+
+                const xsiNamespace = root.getAttribute('xmlns:xsi');
+                if (xsiNamespace !== 'http://www.w3.org/2001/XMLSchema-instance') {
+                    errors.push({
+                        message: 'Missing or incorrect xmlns:xsi attribute',
+                        location: 'root xmlns:xsi attribute'
+                    });
+                }
+            }
+
+            validateSchemaLocation(doc, errors, warnings) {
+                const root = doc.documentElement;
+                const schemaLocation = root.getAttribute('xsi:schemaLocation');
+                
+                if (!schemaLocation) {
+                    errors.push({
+                        message: 'Missing xsi:schemaLocation attribute',
+                        location: 'root xsi:schemaLocation attribute'
+                    });
+                    return;
+                }
+
+                const expectedV2 = 'NFOStandard https://xsd.nfostandard.com/v2/main.xsd';
+                const expectedV1 = 'NFOStandard https://xsd.nfostandard.com/main.xsd';
+                
+                if (schemaLocation === expectedV1) {
+                    warnings.push({
+                        message: 'Using NFO Standard v1 schema. Consider upgrading to v2.',
+                        location: 'root xsi:schemaLocation attribute'
+                    });
+                } else if (schemaLocation !== expectedV2) {
+                    errors.push({
+                        message: 'Invalid schema location. Expected: ' + expectedV2,
+                        location: 'root xsi:schemaLocation attribute'
+                    });
+                }
+            }
+
+            validateContent(doc, errors, warnings, strictMode) {
+                this.validateRatings(doc, errors, warnings);
+                this.validateDates(doc, errors);
+                this.validateCountryCodes(doc, errors);
+                this.validateLanguageCodes(doc, errors);
+                this.validateUniqueIds(doc, errors);
+                
+                if (strictMode) {
+                    this.validateRecommendedFields(doc, warnings);
+                }
+            }
+
+            validateRatings(doc, errors, warnings) {
+                const ratings = doc.querySelectorAll('rating');
+                ratings.forEach((rating, index) => {
+                    const value = rating.getAttribute('value');
+                    const max = rating.getAttribute('max');
+                    
+                    if (value !== null) {
+                        const numValue = parseFloat(value);
+                        if (isNaN(numValue) || numValue < 0) {
+                            errors.push({
+                                message: `Rating value must be a non-negative number, got: ${value}`,
+                                location: `rating[${index + 1}] value attribute`
+                            });
+                        }
+                        
+                        if (max !== null) {
+                            const maxValue = parseFloat(max);
+                            if (!isNaN(maxValue) && numValue > maxValue) {
+                                errors.push({
+                                    message: `Rating value (${value}) exceeds max (${max})`,
+                                    location: `rating[${index + 1}] value attribute`
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+
+            validateDates(doc, errors) {
+                const dateElements = doc.querySelectorAll('releasedate, dateAdded, aired, premiered');
+                const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+                
+                dateElements.forEach((element, index) => {
+                    const dateValue = element.textContent.trim();
+                    if (dateValue && !datePattern.test(dateValue)) {
+                        errors.push({
+                            message: `Invalid date format. Expected YYYY-MM-DD, got: ${dateValue}`,
+                            location: `${element.tagName}[${index + 1}]`
+                        });
+                    }
+                });
+            }
+
+            validateCountryCodes(doc, errors) {
+                const countryElements = doc.querySelectorAll('country, contentrating[country]');
+                const countryPattern = /^[A-Z]{2}$/;
+                
+                countryElements.forEach((element, index) => {
+                    const countryValue = element.getAttribute ? element.getAttribute('country') : element.textContent.trim();
+                    if (countryValue && !countryPattern.test(countryValue)) {
+                        errors.push({
+                            message: `Invalid country code. Expected ISO 3166-1 alpha-2 format (e.g., "US"), got: ${countryValue}`,
+                            location: `${element.tagName}[${index + 1}]`
+                        });
+                    }
+                });
+            }
+
+            validateLanguageCodes(doc, errors) {
+                const langElements = doc.querySelectorAll('language, subtitlelanguage');
+                const langPattern = /^[a-z]{2}$/;
+                
+                langElements.forEach((element, index) => {
+                    const langValue = element.textContent.trim();
+                    if (langValue && !langPattern.test(langValue)) {
+                        errors.push({
+                            message: `Invalid language code. Expected ISO 639-1 format (e.g., "en"), got: ${langValue}`,
+                            location: `${element.tagName}[${index + 1}]`
+                        });
+                    }
+                });
+            }
+
+            validateUniqueIds(doc, errors) {
+                const uniqueIdElements = doc.querySelectorAll('uniqueid');
+                const idPattern = /^[a-zA-Z0-9_-]{1,50}$/;
+                
+                uniqueIdElements.forEach((element, index) => {
+                    const idValue = element.textContent.trim();
+                    if (idValue && !idPattern.test(idValue)) {
+                        errors.push({
+                            message: `Invalid unique ID format. Must be 1-50 characters, alphanumeric with underscores and hyphens only, got: ${idValue}`,
+                            location: `uniqueid[${index + 1}]`
+                        });
+                    }
+                });
+            }
+
+            validateRecommendedFields(doc, warnings) {
+                const mediaTypes = ['movie', 'tvshow', 'music', 'audiobook', 'podcast', 'anime', 'adult', 'musicvideo', 'video'];
+                
+                mediaTypes.forEach(type => {
+                    const mediaElement = doc.querySelector(`media > ${type}`);
+                    if (mediaElement) {
+                        const recommendedFields = this.getRecommendedFields(type);
+                        recommendedFields.forEach(field => {
+                            if (!mediaElement.querySelector(field)) {
+                                warnings.push({
+                                    message: `Recommended field <${field}> is missing from <${type}>`,
+                                    location: type
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+            getRecommendedFields(mediaType) {
+                const common = ['plot', 'outline', 'genre', 'year', 'uniqueid'];
+                
+                switch (mediaType) {
+                    case 'movie':
+                        return [...common, 'director', 'actor', 'runtime', 'rating'];
+                    case 'tvshow':
+                        return [...common, 'actor', 'creator', 'status'];
+                    case 'music':
+                        return [...common, 'artist', 'album', 'track'];
+                    default:
+                        return common;
+                }
+            }
+
+            displayResults(result) {
+                const resultsDiv = document.getElementById('validation-results');
+                let html = '';
+                let className = '';
+
+                if (result.isValid && result.warnings.length === 0) {
+                    html = '<h3>✅ Validation Successful!</h3><p>Your NFO file is valid and conforms to the NFO Standard.</p>';
+                    className = 'validation-success';
+                } else if (result.isValid && result.warnings.length > 0) {
+                    html = '<h3>⚠️ Validation Successful with Warnings</h3><p>Your NFO file is valid but has some recommendations:</p>';
+                    className = 'validation-warning';
+                } else {
+                    html = '<h3>❌ Validation Failed</h3><p>Your NFO file has errors that need to be fixed:</p>';
+                    className = 'validation-error';
+                }
+
+                if (result.errors.length > 0) {
+                    html += '<div class="error-list"><h4>Errors:</h4>';
+                    result.errors.forEach(error => {
+                        html += `<div class="error-item">
+                            <strong>${error.message}</strong>
+                            <div class="error-location">Location: ${error.location}</div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+
+                if (result.warnings.length > 0) {
+                    html += '<div class="error-list"><h4>Warnings:</h4>';
+                    result.warnings.forEach(warning => {
+                        html += `<div class="error-item warning">
+                            <strong>${warning.message}</strong>
+                            <div class="error-location">Location: ${warning.location}</div>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+
+                resultsDiv.innerHTML = html;
+                resultsDiv.className = `validation-results show ${className}`;
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            showResult(message, type) {
+                const resultsDiv = document.getElementById('validation-results');
+                resultsDiv.innerHTML = `<p>${message}</p>`;
+                resultsDiv.className = `validation-results show validation-${type}`;
+                resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            clearContent() {
+                document.getElementById('nfo-content').value = '';
+                document.getElementById('validation-results').className = 'validation-results';
+                document.getElementById('strict-mode').checked = false;
+            }
+
+            loadExample() {
+                const exampleXML = `<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns="NFOStandard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="NFOStandard https://xsd.nfostandard.com/v2/main.xsd">
+  <media>
+    <movie>
+      <title>Inception</title>
+      <originaltitle>Inception</originaltitle>
+      <rating name="imdb" max="10" default="true" value="8.8" votes="200000"/>
+      <userrating>9.0</userrating>
+      <outline>A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.</outline>
+      <plot>Dom Cobb is a skilled thief, the absolute best in the dangerous art of extraction...</plot>
+      <tagline>Your mind is the scene of the crime.</tagline>
+      <runtime>148</runtime>
+      <contentrating country="US" board="MPAA">
+        <rating>PG-13</rating>
+        <image>mpaa_pg13.png</image>
+      </contentrating>
+      <uniqueid type="imdb" default="true">tt1375666</uniqueid>
+      <uniqueid type="tmdb">12345</uniqueid>
+      <genre>Action</genre>
+      <genre>Sci-Fi</genre>
+      <year>2010</year>
+      <country>US</country>
+      <releasedate>2010-07-16</releasedate>
+      <director>
+        <name>Christopher Nolan</name>
+      </director>
+      <actor>
+        <name>Leonardo DiCaprio</name>
+        <role>Dom Cobb</role>
+        <order>1</order>
+      </actor>
+    </movie>
+  </media>
+  <library>
+    <appID>YourMediaServer</appID>
+    <libraryid>movies</libraryid>
+    <dateAdded>2024-01-15T00:00:00</dateAdded>
+  </library>
+</root>`;
+                
+                const textarea = document.getElementById('nfo-content');
+                textarea.value = exampleXML;
+                this.autoResize(textarea);
+                document.getElementById('validation-results').className = 'validation-results';
+            }
+        }
+
+        // Initialize validator when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new NFOValidator();
+        });
+    </script>
 </body>
 </html>
