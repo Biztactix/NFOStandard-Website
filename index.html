@@ -136,6 +136,13 @@
         .not-supported {
             background-color: #fd7e14; /* Orange for not supported */
         }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
         .roadmap {
             text-align: left;
             padding-left: 0;
@@ -210,77 +217,98 @@
                     <img src="nfoLogo-Only.png" alt="NFOStandard Logo">
                 </div>
                 <div class="section-content">
-                    <h2>Welcome to NFOStandard</h2>
-                    <p>NFOStandard aims to standardize the NFO File Format for media. By doing so, we make it easier to transfer metadata and statistics between media servers like Plex and Jellyfin.</p>
-                    <p>With our standard, you can store all media-related data in an NFO file, either inside the video file or next to it. Any new library systems that support our format can seamlessly bring over all important data.</p>
+                    <h2>Welcome to NFOStandard v1.0.0</h2>
+                    <p>The NFO Standard is an open, unified metadata format for media files. By creating a consistent standard for .nfo files across various media applications, we eliminate the need for each application to create its own format, saving developers countless hours and ensuring compatibility across different platforms.</p>
+                    <p>Built to cover 95% of use cases while maintaining extensibility for edge cases, the NFO Standard allows you to store all media-related data in an NFO file next to your media. Any new library systems that support our format can seamlessly bring over all important metadata, watched status, and other crucial information.</p>
                 </div>
             </div>
+        </section>
+
+        <section>
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Unified Structure:</strong> Single, comprehensive format for all .nfo files</li>
+                <li><strong>Open Source:</strong> Licensed under The Unlicense - completely free to use</li>
+                <li><strong>Extensibility:</strong> Easily extendable for custom use cases (experimental features use <code>x-</code> prefix)</li>
+                <li><strong>Modularity:</strong> Separate XSD schema files for different content types</li>
+                <li><strong>Backward Compatibility:</strong> Built-in versioning strategy following Semantic Versioning 2.0.0</li>
+                <li><strong>Comprehensive Documentation:</strong> Full user guides, API references, and migration guides</li>
+                <li><strong>Multiple Format Support:</strong> Converters available for JSON and Protocol Buffers</li>
+            </ul>
         </section>
 
         <section>
             <h2>Supported Media Types</h2>
-            <p>The Open NFO File Standard initially supports the following types of media:</p>
+            <p>The NFO Standard v1.0.0 supports comprehensive metadata for the following media types:</p>
             <ul>
-                <li><strong>Movies:</strong> Comprehensive metadata for films.</li>
-                <li><strong>TV Shows:</strong> Detailed information for television series.</li>
-                <li><strong>Adult Videos:</strong> Specific schema definitions for adult content.</li>
-                <li><strong>Anime:</strong> Metadata tailored for anime series and movies.</li>
-                <li><strong>Music:</strong> Information for music tracks and albums.</li>
-                <li><strong>Audiobooks:</strong> Metadata for audiobooks.</li>
-                <li><strong>Podcasts:</strong> Details for podcast episodes and series.</li>
-                <li><strong>Music Videos:</strong> Information for music video content.</li>
+                <li><strong>Movies:</strong> Comprehensive metadata for films (movie.xsd)</li>
+                <li><strong>TV Shows:</strong> Detailed information for television series (tvshow.xsd)</li>
+                <li><strong>Music:</strong> Information for music tracks and albums (music.xsd)</li>
+                <li><strong>Audiobooks:</strong> Metadata for audiobooks (audiobook.xsd)</li>
+                <li><strong>Podcasts:</strong> Details for podcast episodes and series (podcast.xsd)</li>
+                <li><strong>Anime:</strong> Metadata tailored for anime series and movies (anime.xsd)</li>
+                <li><strong>Adult Content:</strong> Specific schema definitions for adult content (adult.xsd)</li>
+                <li><strong>Music Videos:</strong> Information for music video content (musicvideo.xsd)</li>
+                <li><strong>Generic Videos:</strong> General video content (video.xsd)</li>
             </ul>
+            <p>Each media type has its own dedicated XSD schema for validation, with common elements shared through modular schema files.</p>
         </section>
 
         <section>
-            <h2>Plugins and Support Libraries</h2>
-            <p>To facilitate the adoption of the NFOStandard, we provide various plugins and support libraries for different media server platforms:</p>
+            <h2>Validation Tools and Libraries</h2>
+            <p>To ensure your NFO files conform to the standard, we provide multiple validation tools:</p>
+            <ul>
+                <li><strong>Python Validator:</strong> Install with <code>pip install nfo-validate</code></li>
+                <li><strong>JavaScript/Node.js Validator:</strong> Install with <code>npm install @nfostandard/validator</code></li>
+                <li><strong>Direct XSD Validation:</strong> Use any XML validator with our schemas at <code>https://xsd.nfostandard.com/v1/</code></li>
+            </ul>
+            <h3>Coming Soon - Platform Support</h3>
+            <p>We are actively developing plugins for major media platforms:</p>
             <ul class="support-list">
-                <li><strong>Plex:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Jellyfin:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Emby:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Kodi:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Sonarr:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Radarr:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Whisparr:</strong> <span class="chip not-supported">Not Supported</span></li>
-                <li><strong>Tautulli:</strong> <span class="chip not-supported">Not Supported</span></li>
+                <li><strong>Plex:</strong> <span class="chip not-supported">In Development</span></li>
+                <li><strong>Jellyfin:</strong> <span class="chip not-supported">In Development</span></li>
+                <li><strong>Emby:</strong> <span class="chip not-supported">In Development</span></li>
+                <li><strong>Kodi:</strong> <span class="chip not-supported">Planned</span></li>
+                <li><strong>Sonarr:</strong> <span class="chip not-supported">Planned</span></li>
+                <li><strong>Radarr:</strong> <span class="chip not-supported">Planned</span></li>
             </ul>
-            <p>If you are a developer, we welcome contributions to expand our support for other platforms.</p>
+            <p>If you are a developer, we welcome contributions! Check our GitHub for plugin development guides and migration tools.</p>
         </section>
 
         <section>
-            <h2>Roadmap</h2>
-            <p>Our roadmap outlines the key milestones for building and improving the NFOStandard project:</p>
+            <h2>Project Status</h2>
+            <p><strong>🎉 Version 1.0.0 Released!</strong> - The NFO Standard has reached its first stable release as of January 15, 2024.</p>
             <div class="roadmap">
                 <div class="milestone">
-                    <span class="milestone-title">Initial Data Structures</span>
+                    <span class="milestone-title">✅ Version 1.0.0 - Complete!</span>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 30%;">30%</div>
+                        <div class="progress-bar" style="width: 100%; background-color: #28a745;">100%</div>
                     </div>
-                    <p class="milestone-description">We are currently working on the first pass of data structures to ensure they work correctly.</p>
+                    <p class="milestone-description">Initial stable release with comprehensive schema definitions for all media types, validation tools, and full documentation.</p>
                 </div>
                 <div class="milestone">
-                    <span class="milestone-title">Feedback Phase</span>
+                    <span class="milestone-title">Platform Plugins</span>
                     <div class="progress">
-                        <div class="progress-bar" style="width: 10%;">10%</div>
+                        <div class="progress-bar" style="width: 15%;">15%</div>
                     </div>
-                    <p class="milestone-description">After the initial data structures are in place, we will gather feedback to make improvements.</p>
+                    <p class="milestone-description">Development of official plugins for Plex, Jellyfin, and Emby to enable native NFO Standard support.</p>
                 </div>
                 <div class="milestone">
-                    <span class="milestone-title">Plex Library Scanner</span>
+                    <span class="milestone-title">Migration Tools</span>
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 20%;">20%</div>
+                    </div>
+                    <p class="milestone-description">Tools to help users migrate their existing NFO files from Kodi, Plex, and Emby formats to the NFO Standard.</p>
+                </div>
+                <div class="milestone">
+                    <span class="milestone-title">Community Adoption</span>
                     <div class="progress">
                         <div class="progress-bar" style="width: 5%;">5%</div>
                     </div>
-                    <p class="milestone-description">The next major task is to build a Plex library scanner, which we expect to take 3-6 months.</p>
-                </div>
-                <div class="milestone">
-                    <span class="milestone-title">Future Development</span>
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 0%;">0%</div>
-                    </div>
-                    <p class="milestone-description">We will continue to work on additional features and support for other platforms as we progress.</p>
+                    <p class="milestone-description">Growing ecosystem support through community contributions and third-party tool integration.</p>
                 </div>
             </div>
+            <p><strong>Long-Term Support:</strong> Version 1.0.0 is an LTS release with support guaranteed until January 2027.</p>
         </section>
 
         <section>
@@ -288,7 +316,8 @@
             <p>Here's an example of an NFO file for a movie, demonstrating the use of our schema:</p>
             <pre>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;media xmlns="TheMediaStandard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="TheMediaStandard https://raw.githubusercontent.com/Biztactix/Standard-MediaFormat/main/main.xsd"&gt;
+&lt;root xmlns="NFOStandard" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="NFOStandard https://xsd.nfostandard.com/v1/main.xsd"&gt;
+  &lt;media&gt;
 
   &lt;movie&gt;
     &lt;title&gt;Inception&lt;/title&gt;
@@ -353,20 +382,34 @@
       &lt;url&gt;https://www.imdb.com/name/nm0634240/&lt;/url&gt;
     &lt;/writer&gt;
   &lt;/movie&gt;
-&lt;/media&gt;
+  &lt;/media&gt;
+  &lt;library&gt;
+    &lt;appID&gt;YourMediaServer&lt;/appID&gt;
+    &lt;libraryid&gt;movies&lt;/libraryid&gt;
+    &lt;dateAdded&gt;2024-01-15T00:00:00&lt;/dateAdded&gt;
+  &lt;/library&gt;
+&lt;/root&gt;
             </pre>
         </section>
 
         <section>
-            <div class="header-content">
-                <h1>NFOStandard</h1>
-                <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Visit Our GitHub</a>
+            <h2>Getting Started</h2>
+            <p>Ready to start using the NFO Standard? Here are some quick links to help you:</p>
+            <ul>
+                <li><strong>Documentation:</strong> Check out our comprehensive <a href="https://github.com/Biztactix/NFOStandard/tree/main/docs">documentation</a></li>
+                <li><strong>Examples:</strong> Browse <a href="https://github.com/Biztactix/NFOStandard/tree/main/examples">example NFO files</a> for all media types</li>
+                <li><strong>Schemas:</strong> Access our <a href="https://github.com/Biztactix/NFOStandard/tree/main/Schemas">XSD schemas</a> for validation</li>
+                <li><strong>Tools:</strong> Download <a href="https://github.com/Biztactix/NFOStandard/tree/main/tools">validation and conversion tools</a></li>
+            </ul>
+            <div class="header-content" style="margin-top: 30px;">
+                <h2>Join the Community</h2>
+                <a class="button" href="https://github.com/Biztactix/NFOStandard" target="_blank">Contribute on GitHub</a>
             </div>        
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 NFOStandard. All rights reserved.</p>
+        <p>&copy; 2024 NFOStandard v1.0.0 | Licensed under The Unlicense | <a href="https://github.com/Biztactix/NFOStandard" style="color: #fff;">GitHub</a></p>
     </footer>
 </body>
 </html>
